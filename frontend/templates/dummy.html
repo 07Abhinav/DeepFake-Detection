@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-KYC Form</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        h3 {
+            color: #3498db;
+            margin: 25px 0 15px 0;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="date"],
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="date"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+        }
+
+        input[type="file"] {
+            padding: 10px 0;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .file-upload-wrapper {
+            position: relative;
+            padding: 10px;
+            border: 2px dashed #ddd;
+            border-radius: 5px;
+            text-align: center;
+            transition: border-color 0.3s ease;
+        }
+
+        .file-upload-wrapper:hover {
+            border-color: #3498db;
+        }
+
+        .file-preview {
+            max-width: 200px;
+            margin-top: 10px;
+            display: none;
+        }
+
+        select {
+            background-color: white;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 30px auto 0;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .required::after {
+            content: " *";
+            color: #e74c3c;
+        }
+
+        .file-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            input[type="text"],
+            input[type="email"],
+            input[type="date"],
+            select {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>E-KYC Form</h1>
+        <form method="POST" action="/kyc" enctype="multipart/form-data">
+            <h3>Identity Details</h3>
+            
+            <div class="form-group">
+                <label class="required">Name of Applicant</label>
+                <input type="text" name="name" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Father's Name</label>
+                <input type="text" name="fathers_name" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Gender</label>
+                <select name="gender" required>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Date of Birth</label>
+                <input type="date" name="dob" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Nationality</label>
+                <input type="text" name="nationality" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">PAN No</label>
+                <input type="text" name="pan_no" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Aadhar No</label>
+                <input type="text" name="aadhar_no" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Phone No</label>
+                <input type="text" name="phone_no" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Email</label>
+                <input type="email" name="email" required>
+            </div>
+
+            <h3>Address Details</h3>
+            
+            <div class="form-group">
+                <label class="required">Address</label>
+                <input type="text" name="address" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">City</label>
+                <input type="text" name="city" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">State</label>
+                <input type="text" name="state" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Pin Code</label>
+                <input type="text" name="pin_code" required>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Proof of Address (e.g., Aadhar)</label>
+                <input type="text" name="proof_address" required>
+            </div>
+
+            <h3>File Upload</h3>
+            
+            <div class="form-group">
+                <label class="required">Aadhar Card Photo</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" name="aadhar_photo" accept=".png,.jpg,.jpeg,.pdf" required>
+                    <div class="file-info">Accepted formats: PNG, JPG, JPEG, PDF (Max size: 5MB)</div>
+                </div>
+            </div>
+
+            <h3>Declaration</h3>
+            
+            <div class="form-group">
+                <label class="required">E-signature (Upload a photo of your signature)</label>
+                <div class="file-upload-wrapper">
+                    <input type="file" name="e_signature" accept=".png,.jpg,.jpeg" required 
+                           onchange="previewSignature(this)">
+                    <div class="file-info">Accepted formats: PNG, JPG, JPEG (Max size: 2MB)</div>
+                    <img id="signature-preview" class="file-preview" alt="Signature preview">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="required">Date Signed</label>
+                <input type="date" name="date_signed" required>
+            </div>
+
+            <button type="submit">Submit E-KYC Form</button>
+        </form>
+    </div>
+
+    <script>
+        function previewSignature(input) {
+            const preview = document.getElementById('signature-preview');
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    preview.src = e.target.result;
+                    preview.style.display = 'block';
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            } else {
+                preview.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
