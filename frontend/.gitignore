@@ -1,2 +1,4 @@
 .env
 uploads/
+a.py
+node_modules/
