@@ -17,6 +17,6 @@ A deepfake detection web application designed to enhance e-KYC (Electronic Know 
 
  ```bash
  git clone https://github.com/your-username/deepfake-ekyc.git
- cd deepfake-ekyc
+ cd DeepFake-Detection
  ```
  Use conda environment
