@@ -16,7 +16,7 @@ A deepfake detection web application designed to enhance e-KYC (Electronic Know 
  Database: MongoDB
 
  ```bash
- git clone https://github.com/your-username/deepfake-ekyc.git
+ git clone https://github.com/07Abhinav/DeepFake-Detection.git
  cd DeepFake-Detection
  ```
  Use conda environment
