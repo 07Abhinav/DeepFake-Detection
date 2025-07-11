@@ -3,33 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Success</title>
+    <title>Verification Successful</title>
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --success-color: #4CAF50;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2d3748;
         }
+        
         .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 600px;
+            width: 100%;
+            transition: var(--transition);
         }
+        
+        .container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
         h1 {
-            color: #4CAF50;
+            color: var(--success-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .checkmark svg {
+            width: 50px;
+            height: 50px;
+            fill: var(--success-color);
+        }
+        
+        p {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+        
+        .terms-container {
+            text-align: left;
+            margin: 25px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            max-height: 150px;
+            overflow-y: auto;
+        }
+        
+        .terms-title {
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .terms-content {
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .terms-content ul {
+            padding-left: 20px;
+            margin: 10px 0;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            justify-content: center;
+        }
+        
+        .terms-checkbox input {
+            margin-right: 10px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #3a56d4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+        
+        .btn:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
+        <div class="checkmark">
+            <svg viewBox="0 0 24 24">
+                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+        </div>
         <h1>Verification Successful!</h1>
-        <p>Your video has been verified and is authentic.</p>
-        <a href="/">Return to Home</a>
+        <p>Your video has been verified and is authentic. We're now processing your E-KYC application.</p>
+        
+        <div class="terms-container">
+            <div class="terms-title">Terms & Conditions</div>
+            <div class="terms-content">
+                <p>By proceeding, you agree to the following:</p>
+                <ul>
+                    <li>The information provided is accurate and belongs to you</li>
+                    <li>You consent to share this data with our banking partners for verification</li>
+                    <li>Any false information may lead to account termination</li>
+                </ul>
+                <p>Our privacy policy explains how we collect, use, and protect your personal data.</p>
+            </div>
+        </div>
+        
+        <div class="terms-checkbox">
+            <input type="checkbox" id="agree-terms" onchange="toggleButton()">
+            <label for="agree-terms">I agree to the Terms & Conditions</label>
+        </div>
+        
+        <form action="/acknowledgment" method="POST">
+            <button type="submit" id="proceed-btn" class="btn" disabled>View Application Details</button>
+        </form>
     </div>
+
+    <script>
+        function toggleButton() {
+            const checkbox = document.getElementById('agree-terms');
+            const button = document.getElementById('proceed-btn');
+            button.disabled = !checkbox.checked;
+        }
+    </script>
 </body>
 </html>

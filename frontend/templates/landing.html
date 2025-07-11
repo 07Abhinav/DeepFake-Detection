@@ -5,95 +5,242 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SecureBank - Your Digital Banking Partner</title>
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+            --bank-accent: #e63946; /* Added bank brand color */
+        }
+        
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
             display: flex;
-            background-color: #f4f7f9;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e2e8f0 100%);
+            color: #2d3748;
         }
+        
         .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            padding: 20px;
+            width: 280px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
         }
+        
+        .bank-brand {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .bank-logo {
+            width: 40px;
+            height: 40px;
+            background-color: var(--bank-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .bank-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: white;
+        }
+        
+        .bank-tagline {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-top: 3px;
+        }
+        
         .sidebar-title {
             font-size: 24px;
-            margin-bottom: 30px;
-            color: #ecf0f1;
+            margin-bottom: 40px;
+            font-weight: 600;
+            padding: 0 10px;
+            color: white;
         }
+        
         .sidebar-nav {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
+        
         .sidebar-btn {
-            background-color: #3498db;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
+            padding: 12px 20px;
+            border-radius: var(--border-radius);
             text-decoration: none;
-            text-align: center;
-            transition: background-color 0.3s ease;
+            text-align: left;
+            transition: var(--transition);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
+        
         .sidebar-btn:hover {
-            background-color: #2980b9;
+            background-color: var(--primary-hover);
+            transform: translateX(5px);
         }
+        
         .main-content {
             flex-grow: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 40px;
         }
+        
         .content-container {
             background-color: white;
             padding: 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            max-width: 600px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 800px;
+            width: 100%;
             text-align: center;
+            transition: var(--transition);
+            position: relative;
         }
+        
+        .content-container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .bank-banner {
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            background-color: var(--bank-accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+        
+        h1 span.bank-name {
+            color: var(--bank-accent);
+            font-weight: 700;
+        }
+        
+        p {
+            color: #4a5568;
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
         .features {
             display: flex;
             justify-content: space-between;
-            margin-top: 20px;
+            margin-top: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
         }
+        
         .feature {
             flex: 1;
-            padding: 15px;
-            background-color: #f1f6f9;
-            margin: 0 10px;
-            border-radius: 5px;
+            min-width: 250px;
+            padding: 25px;
+            background-color: #f8fafc;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            border: 1px solid #e2e8f0;
+        }
+        
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .feature h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .feature p {
+            font-size: 16px;
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
     <div class="sidebar">
+        <div class="bank-brand">
+            <div class="bank-logo">N</div>
+            <div>
+                <div class="bank-name">NexusBank</div>
+                <div class="bank-tagline">Digital First Banking</div>
+            </div>
+        </div>
+        
         <div class="sidebar-title">SecureScan</div>
         <div class="sidebar-nav">
-            <a href="/index" class="sidebar-btn">E-KYC Application</a>
-            <a href="#" class="sidebar-btn">Contact Support</a>
+            <a href="/index" class="sidebar-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                    <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+                E-KYC Application
+            </a>
+            <a href="#" class="sidebar-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+                Contact Support
+            </a>
         </div>
     </div>
     
     <div class="main-content">
         <div class="content-container">
-            <h1>SecureScan for Deepfake Videos</h1>
-            <p>Your trusted digital banking partner, providing secure and convenient financial services.</p>
+            <div class="bank-banner">NexusBank Secure</div>
+            <h1>SecureScan for <span class="bank-name">NexusBank</span> Customers</h1>
+            <p>Your trusted digital banking partner, providing secure and convenient financial services with cutting-edge deepfake detection technology.</p>
             
             <div class="features">
                 <div class="feature">
                     <h3>Digital Security</h3>
-                    <p>Advanced encryption and multi-factor authentication</p>
+                    <p>Advanced encryption and multi-factor authentication to protect your identity and assets</p>
                 </div>
                 <div class="feature">
                     <h3>Quick Services</h3>
-                    <p>Fast E-KYC verification</p>
+                    <p>Fast E-KYC verification with our AI-powered deepfake detection system</p>
+                </div>
+                <div class="feature">
+                    <h3>Fraud Prevention</h3>
+                    <p>Real-time analysis of video submissions to prevent identity fraud</p>
                 </div>
             </div>
         </div>

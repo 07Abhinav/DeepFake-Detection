@@ -5,60 +5,222 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
+        :root {
+            --primary-color: #4361ee;
+            --primary-hover: #3a56d4;
+            --secondary-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark-color);
         }
+        
         .form-container {
-            max-width: 400px;
-            margin: 50px auto;
-            padding: 20px;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px;
             background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateY(-20px);
+            transition: var(--transition);
         }
+        
+        .form-container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
         h2 {
             text-align: center;
-            color: #333;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
         }
+        
         form {
             display: flex;
             flex-direction: column;
         }
+        
+        .input-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
         label {
-            margin: 10px 0 5px;
-            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+            transition: var(--transition);
         }
+        
         input {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e9ecef;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            box-sizing: border-box;
         }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
         button {
-            margin-top: 20px;
-            padding: 10px;
-            background: #007BFF;
+            margin-top: 10px;
+            padding: 14px;
+            background: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 4px;
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            transition: var(--transition);
+            letter-spacing: 0.5px;
         }
+        
         button:hover {
-            background: #0056b3;
+            background: var(--primary-hover);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .forgot-password {
+            text-align: right;
+            margin-top: 10px;
+        }
+        
+        .forgot-password a {
+            color: #6c757d;
+            text-decoration: none;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        
+        .forgot-password a:hover {
+            color: var(--primary-color);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .divider::before {
+            margin-right: 10px;
+        }
+        
+        .divider::after {
+            margin-left: 10px;
+        }
+        
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .social-btn:hover {
+            background: #e9ecef;
+            transform: translateY(-2px);
+        }
+        
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+        }
+        
+        .signup-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .signup-link a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="form-container">
-        <h2>Login</h2>
+        <h2>Welcome Back</h2>
         <form method="POST">
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" required>
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="password" required>
-            <button type="submit">Login</button>
+            <div class="input-group">
+                <label for="email">Email Address</label>
+                <input type="email" name="email" id="email" required placeholder="Enter your email">
+            </div>
+            
+            <div class="input-group">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" required placeholder="Enter your password">
+            </div>
+<!--             
+            <div class="forgot-password">
+                <a href="#">Forgot password?</a>
+            </div>
+            
+            
+            
+            <div class="divider">or continue with</div>
+            
+            <div class="social-login">
+                <div class="social-btn">G</div>
+                <div class="social-btn">f</div>
+                <div class="social-btn">in</div>
+            </div> -->
+            <button type="submit">Sign In</button>
+            
+            <div class="signup-link">
+                Don't have an account? <a href="#">Sign up</a>
+            </div>
         </form>
     </div>
 </body>

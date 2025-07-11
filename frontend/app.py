@@ -1,4 +1,5 @@
 import os
+import base64
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -171,6 +172,12 @@ def video_submit():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
+        # Check if "on_camera" is selected
+        if request.form.get('on_camera'):
+            # Simulate a "REAL" prediction for on-camera verification
+            flash("Live verification selected. Status: REAL")
+            return redirect(url_for('success'))
+
         if 'video' not in request.files:
             flash('No video file uploaded')
             return redirect(request.url)
@@ -191,14 +198,8 @@ def video_submit():
             frame_files = sorted(glob.glob(f"{output_folder}/*.jpg"))
             predictions = [predict_frame(frame) for frame in frame_files]
             
-            # Debug: Print predictions
-            print("Predictions:", predictions)
-            
-            final_decision = "FAKE" if predictions.count("FAKE") > 0 else "REAL"
-            
-            # Debug: Print final decision
-            print("Final Decision:", final_decision)
-            
+            final_decision = "FAKE" if predictions.count("FAKE") >= 3 else "REAL"
+
             if final_decision == "REAL":
                 return redirect(url_for('success'))
             else:
@@ -213,6 +214,133 @@ def success():
 @app.route('/failure')
 def failure():
     return render_template('failure.html')
+
+# Add these new routes to your existing app.py
+
+@app.route('/acknowledgment', methods=['GET', 'POST'])
+def acknowledgment():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    
+    # Get the latest KYC submission for this user
+    kyc_data = mongo.db.kyc_forms.find_one({'email': session['email']}, sort=[('submission_date', -1)])
+    
+    if not kyc_data:
+        flash('No KYC submission found')
+        return redirect(url_for('kyc'))
+    
+    return render_template('acknowledgment.html', kyc_data=kyc_data)
+
+@app.route('/verification_complete')
+def verification_complete():
+    if 'email' not in session:
+        return redirect(url_for('login'))
+    
+    # In a real application, you would update the KYC status in the database here
+    # For example:
+    # mongo.db.kyc_forms.update_one(
+    #     {'email': session['email']},
+    #     {'$set': {'status': 'verified', 'verification_date': datetime.utcnow()}}
+    # )
+    
+    return render_template('verification_complete.html')
+# # Add these new routes to your existing app.py
+
+# @app.route('/nri_kyc', methods=['GET', 'POST'])
+# def nri_kyc():
+#     if 'email' not in session:
+#         return redirect(url_for('login'))
+
+#     if request.method == 'POST':
+#         try:
+#             # Save NRI-specific documents
+#             passport = request.files['passport']
+#             visa = request.files['visa']
+#             overseas_address_proof = request.files['overseas_address_proof']
+
+#             # Secure filenames
+#             passport_filename = secure_filename(passport.filename)
+#             visa_filename = secure_filename(visa.filename)
+#             address_proof_filename = secure_filename(overseas_address_proof.filename)
+
+#             # Save files
+#             passport.save(os.path.join(app.config['UPLOAD_FOLDER'], passport_filename))
+#             visa.save(os.path.join(app.config['UPLOAD_FOLDER'], visa_filename))
+#             overseas_address_proof.save(os.path.join(app.config['UPLOAD_FOLDER'], address_proof_filename))
+
+#             # Update KYC data with NRI info
+#             nri_data = {
+#                 'nri_status': True,
+#                 'passport_number': request.form['passport_number'],
+#                 'country_of_residence': request.form['country_of_residence'],
+#                 'visa_type': request.form['visa_type'],
+#                 'passport_doc': passport_filename,
+#                 'visa_doc': visa_filename,
+#                 'overseas_address_proof': address_proof_filename,
+#                 'nri_submission_date': datetime.utcnow()
+#             }
+
+#             # Update the existing KYC record
+#             mongo.db.kyc_forms.update_one(
+#                 {'email': session['email']},
+#                 {'$set': nri_data}
+#             )
+
+#             return redirect(url_for('nri_processing'))
+
+#         except Exception as e:
+#             print(f"Error in NRI KYC submission: {e}")
+#             flash('An error occurred during NRI document submission')
+#             return redirect(url_for('nri_kyc'))
+
+#     return render_template('nri_kyc.html')
+
+# @app.route('/nri_processing')
+# def nri_processing():
+#     if 'email' not in session:
+#         return redirect(url_for('login'))
+#     return render_template('nri_processing.html')
+
+# @app.route('/senior_verification', methods=['GET', 'POST'])
+# def senior_verification():
+#     if 'email' not in session:
+#         return redirect(url_for('login'))
+
+#     if request.method == 'POST':
+#         # Update KYC data with senior citizen status
+#         mongo.db.kyc_forms.update_one(
+#             {'email': session['email']},
+#             {'$set': {
+#                 'senior_citizen': True,
+#                 'manual_verification_requested': True,
+#                 'verification_status': 'pending_manual_review'
+#             }}
+#         )
+#         return redirect(url_for('senior_processing'))
+
+#     return render_template('senior_verification.html')
+
+# # @app.route('/senior_processing')
+# # def senior_processing():
+# #     if 'email' not in session:
+# #         return redirect(url_for('login'))
+# #     return render_template('senior_processing.html')
+
+# # # Modify the existing success route to handle conditions
+# # @app.route('/success')
+# # def success():
+# #     if 'email' not in session:
+# #         return redirect(url_for('login'))
+    
+# #     # Check if user is NRI or senior citizen
+# #     kyc_data = mongo.db.kyc_forms.find_one({'email': session['email']})
+    
+# #     if kyc_data.get('nri_status'):
+# #         return redirect(url_for('nri_kyc'))
+# #     elif kyc_data.get('senior_citizen'):
+# #         return redirect(url_for('senior_verification'))
+    
+# #     return render_template('success.html')
 
 @app.route('/logout')
 def logout():

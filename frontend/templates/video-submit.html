@@ -23,7 +23,7 @@
         h1 {
             color: #333;
         }
-        input[type="file"] {
+        input[type="file"], video {
             margin: 20px 0;
         }
         button {
@@ -37,15 +37,99 @@
         button:hover {
             background-color: #2980b9;
         }
+        .checkbox-container {
+            margin-top: 10px;
+        }
+        #camera-container {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Submit Your Video for Verification</h1>
-        <form method="POST" enctype="multipart/form-data">
-            <input type="file" name="video" accept=".mp4" required>
-            <button type="submit">Submit Video</button>
+        <form id="video-form" method="POST" enctype="multipart/form-data">
+            <input type="file" name="video" id="video" accept=".mp4">
+            
+            <div class="checkbox-container">
+                <label>
+                    <input type="checkbox" name="on_camera" id="on_camera"> Use On-Camera Verification
+                </label>
+            </div>
+
+            <div id="camera-container">
+                <video id="video-preview" autoplay></video>
+                <button type="button" id="start-recording">Start Recording</button>
+                <button type="button" id="stop-recording" style="display:none;">Stop Recording</button>
+                <input type="hidden" name="recorded_video" id="recorded_video">
+            </div>
+
+            <button type="submit">Submit</button>
         </form>
     </div>
+
+    <script>
+        const onCameraCheckbox = document.getElementById("on_camera");
+        const videoInput = document.getElementById("video");
+        const cameraContainer = document.getElementById("camera-container");
+        const videoPreview = document.getElementById("video-preview");
+        const startRecordingBtn = document.getElementById("start-recording");
+        const stopRecordingBtn = document.getElementById("stop-recording");
+        const form = document.getElementById("video-form");
+    
+        let mediaRecorder;
+        let recordedChunks = [];
+    
+        onCameraCheckbox.addEventListener("change", function() {
+            if (this.checked) {
+                videoInput.style.display = "none";
+                cameraContainer.style.display = "block";
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => {
+                        videoPreview.srcObject = stream;
+                        mediaRecorder = new MediaRecorder(stream);
+                        mediaRecorder.ondataavailable = event => {
+                            if (event.data.size > 0) recordedChunks.push(event.data);
+                        };
+                    })
+                    .catch(err => console.error("Camera access denied:", err));
+            } else {
+                videoInput.style.display = "block";
+                cameraContainer.style.display = "none";
+            }
+        });
+    
+        startRecordingBtn.addEventListener("click", function() {
+            recordedChunks = [];
+            mediaRecorder.start();
+            startRecordingBtn.style.display = "none";
+            stopRecordingBtn.style.display = "block";
+        });
+    
+        stopRecordingBtn.addEventListener("click", function() {
+            mediaRecorder.stop();
+            stopRecordingBtn.style.display = "none";
+            startRecordingBtn.style.display = "block";
+    
+            mediaRecorder.onstop = () => {
+                const recordedBlob = new Blob(recordedChunks, { type: "video/mp4" });
+                const reader = new FileReader();
+    
+                reader.readAsDataURL(recordedBlob);
+                reader.onloadend = () => {
+                    document.getElementById("recorded_video").value = reader.result;
+                    console.log("Video ready to be uploaded!");
+                };
+            };
+        });
+    
+        form.addEventListener("submit", function(event) {
+            if (onCameraCheckbox.checked && !document.getElementById("recorded_video").value) {
+                event.preventDefault();
+                alert("Please record a video before submitting.");
+            }
+        });
+    </script>
+    
 </body>
 </html>

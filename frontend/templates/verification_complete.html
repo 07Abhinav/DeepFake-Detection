@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-KYC Verification Complete</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --success-color: #4CAF50;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2d3748;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 700px;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            color: var(--success-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background-color: #e8f5e9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .success-icon svg {
+            width: 60px;
+            height: 60px;
+            fill: var(--success-color);
+        }
+        
+        p {
+            font-size: 18px;
+            color: #4a5568;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .delivery-info {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .delivery-info h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background-color: #3a56d4;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+        </div>
+        <h1>E-KYC Verification Complete!</h1>
+        <p>Your E-KYC document verification process has been successfully completed. All your documents have been verified and approved.</p>
+        
+        <div class="delivery-info">
+            <h3>Next Steps</h3>
+            <p>Your bank card will be processed and dispatched shortly. You can:</p>
+            <ul>
+                <li>Collect your card from your nearest branch starting from tomorrow</li>
+                <li>Or wait for delivery to your registered address within 4-6 working days</li>
+            </ul>
+            <p>You will receive an SMS and email notification once your card is ready for collection or has been dispatched.</p>
+        </div>
+        
+        <a href="/" class="btn">Return to Home</a>
+    </div>
+</body>
+</html>

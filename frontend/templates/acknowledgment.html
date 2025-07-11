@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-KYC Acknowledgment</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --border-radius: 12px;
+            --box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #2d3748;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            max-width: 800px;
+            width: 100%;
+            transition: var(--transition);
+        }
+        
+        .container:hover {
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .kyc-details {
+            text-align: left;
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            width: 200px;
+            color: #555;
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .processing {
+            margin: 30px 0;
+            padding: 20px;
+            background-color: #fff8e1;
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 15px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .processing-text {
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>E-KYC Application In Processing</h1>
+        <p>Here are the details you submitted for verification:</p>
+        
+        <div class="kyc-details">
+            <div class="detail-row">
+                <div class="detail-label">Full Name:</div>
+                <div class="detail-value">{{ kyc_data.name }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Father's Name:</div>
+                <div class="detail-value">{{ kyc_data.fathers_name }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Date of Birth:</div>
+                <div class="detail-value">{{ kyc_data.dob }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Aadhar Number:</div>
+                <div class="detail-value">{{ kyc_data.aadhar_no }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">PAN Number:</div>
+                <div class="detail-value">{{ kyc_data.pan_no }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Contact Number:</div>
+                <div class="detail-value">{{ kyc_data.phone_no }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Address:</div>
+                <div class="detail-value">{{ kyc_data.address }}, {{ kyc_data.city }}, {{ kyc_data.state }} - {{ kyc_data.pin_code }}</div>
+            </div>
+            <div class="detail-row">
+                <div class="detail-label">Submission Date:</div>
+                <div class="detail-value">{{ kyc_data.submission_date.strftime('%d %B %Y %H:%M') }}</div>
+            </div>
+        </div>
+        
+        <div class="processing">
+            <div class="spinner"></div>
+            <div class="processing-text">Processing your application. Please wait...</div>
+        </div>
+        
+        <div id="redirect-message" style="display: none;">
+            <p>Your application is being processed. You'll be redirected shortly...</p>
+        </div>
+    </div>
+
+    <script>
+        // Redirect to verification page after 2 minutes (120000 milliseconds)
+        setTimeout(function() {
+            document.querySelector('.processing').style.display = 'none';
+            document.getElementById('redirect-message').style.display = 'block';
+            setTimeout(function() {
+                window.location.href = "/verification_complete";
+            }, 1500);
+        }, 60000);
+    </script>
+</body>
+</html>
